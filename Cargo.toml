@@ -12,7 +12,7 @@
 [package]
 edition = "2018"
 name = "bytemuck"
-version = "1.13.1"
+version = "1.14.1"
 authors = ["Lokathor <zefria@gmail.com>"]
 exclude = ["/pedantic.bat"]
 description = "A crate for mucking around with piles of bytes."
@@ -31,6 +31,7 @@ repository = "https://github.com/Lokathor/bytemuck"
 
 [package.metadata.docs.rs]
 features = [
+    "nightly_docs",
     "derive",
     "extern_crate_alloc",
     "extern_crate_std",
@@ -38,6 +39,7 @@ features = [
     "zeroable_atomics",
     "min_const_generics",
     "wasm_simd",
+    "must_cast",
 ]
 
 [package.metadata.playground]
@@ -49,6 +51,7 @@ features = [
     "zeroable_atomics",
     "min_const_generics",
     "wasm_simd",
+    "must_cast",
 ]
 
 [dependencies.bytemuck_derive]
@@ -57,10 +60,13 @@ optional = true
 
 [features]
 aarch64_simd = []
+align_offset = []
 derive = ["bytemuck_derive"]
 extern_crate_alloc = []
 extern_crate_std = ["extern_crate_alloc"]
 min_const_generics = []
+must_cast = []
+nightly_docs = []
 nightly_portable_simd = []
 nightly_stdsimd = []
 unsound_ptr_pod_impl = []
