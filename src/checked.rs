@@ -170,6 +170,7 @@ unsafe impl CheckedBitPattern for bool {
   }
 }
 
+// Rust 1.70.0 documents that NonZero[int] has the same layout as [int].
 macro_rules! impl_checked_for_nonzero {
   ($($nonzero:ty: $primitive:ty),* $(,)?) => {
     $(
@@ -178,14 +179,7 @@ macro_rules! impl_checked_for_nonzero {
 
         #[inline]
         fn is_valid_bit_pattern(bits: &Self::Bits) -> bool {
-          // Note(zachs18): The size and alignment check are almost certainly
-          // not necessary, but Rust currently doesn't explicitly document that
-          // NonZero[int] has the same layout as [int], so we check it to be safe.
-          // In a const to reduce debug-profile overhead.
-          const LAYOUT_SAME: bool =
-            core::mem::size_of::<$nonzero>() == core::mem::size_of::<$primitive>()
-            && core::mem::align_of::<$nonzero>() == core::mem::align_of::<$primitive>();
-          LAYOUT_SAME && *bits != 0
+          *bits != 0
         }
       }
     )*
@@ -230,6 +224,7 @@ impl core::fmt::Display for CheckedCastError {
   }
 }
 #[cfg(feature = "extern_crate_std")]
+#[cfg_attr(feature = "nightly_docs", doc(cfg(feature = "extern_crate_std")))]
 impl std::error::Error for CheckedCastError {}
 
 impl From<crate::PodCastError> for CheckedCastError {
@@ -249,7 +244,7 @@ impl From<crate::PodCastError> for CheckedCastError {
 pub fn try_from_bytes<T: CheckedBitPattern>(
   s: &[u8],
 ) -> Result<&T, CheckedCastError> {
-  let pod = unsafe { internal::try_from_bytes(s) }?;
+  let pod = crate::try_from_bytes(s)?;
 
   if <T as CheckedBitPattern>::is_valid_bit_pattern(pod) {
     Ok(unsafe { &*(pod as *const <T as CheckedBitPattern>::Bits as *const T) })
@@ -287,7 +282,7 @@ pub fn try_from_bytes_mut<T: CheckedBitPattern + NoUninit>(
 pub fn try_pod_read_unaligned<T: CheckedBitPattern>(
   bytes: &[u8],
 ) -> Result<T, CheckedCastError> {
-  let pod = unsafe { internal::try_pod_read_unaligned(bytes) }?;
+  let pod = crate::try_pod_read_unaligned(bytes)?;
 
   if <T as CheckedBitPattern>::is_valid_bit_pattern(&pod) {
     Ok(unsafe { transmute!(pod) })
@@ -311,7 +306,7 @@ pub fn try_pod_read_unaligned<T: CheckedBitPattern>(
 pub fn try_cast<A: NoUninit, B: CheckedBitPattern>(
   a: A,
 ) -> Result<B, CheckedCastError> {
-  let pod = unsafe { internal::try_cast(a) }?;
+  let pod = crate::try_cast(a)?;
 
   if <B as CheckedBitPattern>::is_valid_bit_pattern(&pod) {
     Ok(unsafe { transmute!(pod) })
@@ -331,7 +326,7 @@ pub fn try_cast<A: NoUninit, B: CheckedBitPattern>(
 pub fn try_cast_ref<A: NoUninit, B: CheckedBitPattern>(
   a: &A,
 ) -> Result<&B, CheckedCastError> {
-  let pod = unsafe { internal::try_cast_ref(a) }?;
+  let pod = crate::try_cast_ref(a)?;
 
   if <B as CheckedBitPattern>::is_valid_bit_pattern(pod) {
     Ok(unsafe { &*(pod as *const <B as CheckedBitPattern>::Bits as *const B) })
@@ -380,7 +375,7 @@ pub fn try_cast_mut<
 pub fn try_cast_slice<A: NoUninit, B: CheckedBitPattern>(
   a: &[A],
 ) -> Result<&[B], CheckedCastError> {
-  let pod = unsafe { internal::try_cast_slice(a) }?;
+  let pod = crate::try_cast_slice(a)?;
 
   if pod.iter().all(|pod| <B as CheckedBitPattern>::is_valid_bit_pattern(pod)) {
     Ok(unsafe {
@@ -455,7 +450,7 @@ pub fn pod_read_unaligned<T: CheckedBitPattern>(bytes: &[u8]) -> T {
 ///
 /// ## Panics
 ///
-/// * This is like [`try_cast`](try_cast), but will panic on a size mismatch.
+/// * This is like [`try_cast`], but will panic on a size mismatch.
 #[inline]
 pub fn cast<A: NoUninit, B: CheckedBitPattern>(a: A) -> B {
   match try_cast(a) {
