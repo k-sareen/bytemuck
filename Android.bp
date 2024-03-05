@@ -17,6 +17,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -38,6 +39,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -59,6 +61,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -80,6 +83,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -101,6 +105,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -122,6 +127,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -143,6 +149,7 @@ rust_test {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     rustlibs: ["libbytemuck"],
     proc_macros: ["libbytemuck_derive"],
@@ -159,6 +166,7 @@ rust_library {
     features: [
         "bytemuck_derive",
         "derive",
+        "extern_crate_alloc",
     ],
     proc_macros: ["libbytemuck_derive"],
     apex_available: [
