@@ -1,6 +1,7 @@
 {
   "features": [
-    "derive"
+    "derive",
+    "extern_crate_alloc"
   ],
   "tests": true
 }
