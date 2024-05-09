@@ -169,6 +169,7 @@ rust_library {
         "bytemuck_derive",
         "derive",
         "extern_crate_alloc",
+        "extern_crate_std",
     ],
     proc_macros: ["libbytemuck_derive"],
     apex_available: [
