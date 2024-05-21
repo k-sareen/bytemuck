@@ -9,7 +9,7 @@ rust_test {
     crate_name: "array_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/array_tests.rs"],
+    crate_root: "tests/array_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -31,7 +31,7 @@ rust_test {
     crate_name: "cast_slice_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/cast_slice_tests.rs"],
+    crate_root: "tests/cast_slice_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -53,7 +53,7 @@ rust_test {
     crate_name: "checked_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/checked_tests.rs"],
+    crate_root: "tests/checked_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -75,7 +75,7 @@ rust_test {
     crate_name: "doc_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/doc_tests.rs"],
+    crate_root: "tests/doc_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -97,7 +97,7 @@ rust_test {
     crate_name: "offset_of_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/offset_of_tests.rs"],
+    crate_root: "tests/offset_of_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -119,7 +119,7 @@ rust_test {
     crate_name: "std_tests",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/std_tests.rs"],
+    crate_root: "tests/std_tests.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -141,7 +141,7 @@ rust_test {
     crate_name: "transparent",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["tests/transparent.rs"],
+    crate_root: "tests/transparent.rs",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     test_options: {
@@ -163,13 +163,12 @@ rust_library {
     crate_name: "bytemuck",
     cargo_env_compat: true,
     cargo_pkg_version: "1.14.1",
-    srcs: ["src/lib.rs"],
+    crate_root: "src/lib.rs",
     edition: "2018",
     features: [
         "bytemuck_derive",
         "derive",
         "extern_crate_alloc",
-        "extern_crate_std",
     ],
     proc_macros: ["libbytemuck_derive"],
     apex_available: [
