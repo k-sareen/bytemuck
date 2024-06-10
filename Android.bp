@@ -3,6 +3,21 @@
 // because the changes will be overridden on upgrade.
 // Content before the first "rust_*" or "genrule" module is preserved.
 
+package {
+    default_applicable_licenses: ["external_rust_crates_bytemuck_license"],
+}
+
+license {
+    name: "external_rust_crates_bytemuck_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "LICENSE",
+    ],
+}
+
 rust_test {
     name: "bytemuck_test_tests_array_tests",
     host_supported: true,
